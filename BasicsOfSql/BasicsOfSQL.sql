@@ -18,11 +18,11 @@ Create table Customer
 
 /*---- Insert some dummy data in Table ----*/
 insert into Customer 
-values ('Ritesh', 3642462, 'patna', 'patna', 788756,'India', 'M'),
-('james', 5645656, 'newyork', 'newyork', 675677,'USA', 'M'),
-('Lina', 67868878, 'London', 'London',567675,'UK', 'F'),
-('Roshan', 54656556, 'kathmandu', 'kathmandu', 445556, 'Nepal', 'M'),
-('Rita', 35554345, 'Hougang', 'Hougang', 8788786, 'Singapore', 'F');
+values ('vikash', 2323121, 'gaya', 'gaya', 742374,'India', 'M'),
+('anikt', 56778899, 'wc', 'wc', 56466,'USA', 'M'),
+('neha', 242344, 'London', 'London',677756,'UK', 'F'),
+('akhil', 23234345, 'kathmandu', 'kathmandu', 688866, 'Nepal', 'M'),
+('sam', 5676577, 'Hougang', 'Hougang', 456577, 'Singapore', 'F');
 
 /*---- Alter existing Table add new Column ----*/
 Alter Table Customer
@@ -35,9 +35,12 @@ select distinct Country from Customer;
 select * from Customer where Country = 'India';
 
 /*---- Filtering data from Table using Operators----*/
+select * from Customer;
 select * from Customer where Country Like 'U%';
 select * from Customer where Country between 'India' and 'Uk';
+select * from product where NetPay between 15000 and 40000 order by NetPay asc;
 select * from Customer where City in ('london' , 'patna');
+select * from product where Product_Id in (11 , 15);
 select * from Customer where Country = 'India' and City = 'patna';
 select * from Customer where Country = 'Usa' and City = 'newyork';
 select * from Customer where Country = 'Uk' or city = 'Delhi';
@@ -71,10 +74,15 @@ select Customer_Name, Country from Customer order by Country Asc offset 0 row Fe
 
 /*---- Math function for doing Math opration----*/
 select MIN (City) as City from Customer;
+select MIN (Price) as MinPrice from Product;
 select MIN (Customer_Mobile) as mobile from Customer;
 select Max (City) as City from Customer;
 select Max (Customer_Mobile) as mobile from Customer;
+select Max (Price) as MaxPrice from Product;
+select Avg (Price) as AvgPrice from Product;
+select sum (Price) as SumPrice from Product;
 select COUNT(Country) from Customer;
+select COUNT(Price) as totalCount from Product;
 select COUNT (Country) as TotalCustomerbyCountry from Customer where Country = 'India';
 select COUNT(Customer_Id) as TotalCustomer, Country from Customer group by Country;
 select COUNT(Customer_Name) as CustomerName , Gender from Customer group by Gender;
