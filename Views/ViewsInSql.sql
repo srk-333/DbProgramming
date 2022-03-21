@@ -42,7 +42,7 @@ EXEC sp_rename
     @newname = 'product_list';
 SELECT * FROM product_list;
 
-/*----- Get A view Information -----*/
+/*----- Get view Information -----*/
 SELECT
     definition,
     uses_ansi_nulls,
@@ -53,6 +53,7 @@ FROM
 WHERE
     object_id = object_id('product_list');
 
+-- using object definition
 SELECT 
     OBJECT_DEFINITION( OBJECT_ID('product_list') ) view_info;
 
@@ -67,7 +68,7 @@ FROM
 INNER JOIN Customer c 
         ON c.Customer_Id = p.Product_id;
 
---- Drop
+--- Drop view
 DROP VIEW IF EXISTS product_Detail;
 
 /*--- List all views from sql server ---*/
@@ -113,6 +114,41 @@ SELECT
     Customer_Name,
 	Customer_Mobile
 FROM
-    dbo.Customer
+    dbo.Customer;
 
-select * from pDetails
+Create view Product_Master
+with schemabinding
+as
+SELECT
+    product_name,  
+    price
+FROM
+	dbo.product p
+INNER JOIN dbo.Customer c 
+        ON c.Customer_Id = p.Product_id;
+
+select * from Product_Master;
+
+/*--- view on DDl query  ---*/
+create view productDemo
+as
+select * from product;
+
+select * from productDemo;
+Insert into productDemo(Product_name,Price,Discount,NetPay,Customer_Id,Category)
+values('Fan', 5000 , 500, 4500, 12,'Eletronics');
+Update productDemo set Product_name = 'Bajaj Fan' where Product_id = 2012;
+Delete from productDemo where Product_name ='Fan';
+
+/*--- view With Check option ---*/
+create view CustomerDemo
+as
+select * from Customer where City = 'London'
+with check option
+-- when we use check option then we can'nt insert or update in view 
+-- if we dnt provide City = london 
+select * from CustomerDemo
+--not fullfill view with check option
+Update CustomerDemo set Customer_Name = 'Sam' where City = 'Jehanabad' ;
+--fullfills view with check option
+Update CustomerDemo set Customer_Name = 'Sam' where City = 'London' and Customer_Id = 12 ;
