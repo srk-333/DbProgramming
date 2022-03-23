@@ -126,8 +126,7 @@ as
 Begin
 	Begin Transaction
 	Begin Try
-		Insert into EmployeeTrans
-		values(105, 5, 43, 10000);
+		Insert into EmployeeTrans values(105, 5, 43, 10000);
 		Delete EmployeeTrans where Id = 104;
 		Commit Transaction
 	End Try

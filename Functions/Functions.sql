@@ -22,13 +22,18 @@ values
 select*from EmployeeRecords
 
 /**** TableValued Functions *****/
-CREATE FUNCTION Fun_Employee()
+CREATE Or ALTER FUNCTION Fun_Employee
+(
+	@City varchar(50)
+)
 returns table
 as
-return(select * from EmployeeRecords)
+return
+select * from EmployeeRecords
+where city = @City;
 
 --View Records using Function
-select *from Fun_Employee()
+select *from Fun_Employee('Delhi')
 
 -- Remove a function
 drop function if exists Fun_EmployeeInformation
@@ -41,31 +46,33 @@ CREATE FUNCTION ScalarFun
 )
 returns nvarchar(100)
 as
-begin return(select @EmpName +' '+@city+ ' ')
+begin 
+	return(select @EmpName +' '+@city+ ' ')
 end
 
 select dbo.ScalarFun('Rohit','gaya')  Details 
 
 ---scalar function---
-CREATE FUNCTION Salaryincreament1
+CREATE FUNCTION Salaryincreament
 (
 	@EmpName varchar(20),
 	@salary decimal(20)
 )
 returns nvarchar(100)
 as
-begin return(Select @EmpName+' '+(@salary+3000)+' ')
+begin 
+	return(Select @EmpName+' '+(@salary+3000)+' ')
 end
 
 ---Alter Scalar Function ---
-Alter FUNCTION Salaryincreament1 
+Alter FUNCTION Salaryincreament
 (
 	@salary decimal(20)
 )
 returns nvarchar(100)
 as
 begin
-return (select @salary+3000)
+	return (select @salary+3000)
 end
 
 select dbo.Salaryincreament1('5000') deatails
